@@ -11,7 +11,7 @@ include = "master_agent"
 python = ">=3.11,<3.12"
 fastapi = "^0.115.0"
 uvicorn = {extras = ["standard"], version = "^0.30.0"}
-python-multipart = "^0.0.9"
+python-multipart = ">=0.0.9,<0.0.32"
 pydantic = {extras = ["email"], version = "^2.8.0"}
 requests = "^2.32.0"
 pyyaml = "^6.0.0"
