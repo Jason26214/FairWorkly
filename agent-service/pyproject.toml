@@ -28,7 +28,7 @@ optional = true
 
 [tool.poetry.group.ingest.dependencies]
 langchain-text-splitters = "^0.3.0"
-pypdf = "^5.1.0"
+pypdf = ">=5.1,<7.0"
 
 [tool.poetry.group.local-models]
 optional = true
