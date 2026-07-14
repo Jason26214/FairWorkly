@@ -1,0 +1,95 @@
+{
+  "folders": [{ "path": "." }],
+
+  "settings": {
+    // ---- C# / .NET ----
+    "dotnet.defaultSolution": "backend/FairWorkly.sln",
+    "[csharp]": {
+      "editor.defaultFormatter": "csharpier.csharpier-vscode",
+      "editor.formatOnSave": true,
+      "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+      }
+    },
+
+    // ---- Python / agent-service ----
+    "python.defaultInterpreterPath": "${workspaceFolder}/agent-service/.venv/Scripts/python.exe",
+
+    // ---- noise reduction ----
+    "files.exclude": { "**/bin": true, "**/obj": true },
+    "search.exclude": {
+      "**/bin": true,
+      "**/obj": true,
+      "**/.venv": true,
+      "**/node_modules": true,
+      "**/dist": true
+    }
+  },
+
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "🟦 Backend (.NET :5680)",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build-backend",
+        "program": "${workspaceFolder}/backend/src/FairWorkly.API/bin/Debug/net8.0/FairWorkly.API.dll",
+        "cwd": "${workspaceFolder}/backend/src/FairWorkly.API",
+        "launchSettingsFilePath": "${workspaceFolder}/backend/src/FairWorkly.API/Properties/launchSettings.json",
+        "launchSettingsProfile": "http",
+        "console": "internalConsole"
+      },
+      {
+        "name": "🐍 Agent Service (:8000)",
+        "type": "debugpy",
+        "request": "launch",
+        "module": "uvicorn",
+        "args": ["master_agent.main:app", "--port", "8000", "--reload"],
+        "cwd": "${workspaceFolder}/agent-service",
+        "python": "${workspaceFolder}/agent-service/.venv/Scripts/python.exe",
+        "envFile": "${workspaceFolder}/agent-service/.env",
+        "jinja": true,
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "⚛️ Frontend (Vite :5173)",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "npm run dev",
+        "cwd": "${workspaceFolder}/frontend"
+      }
+    ],
+    "compounds": [
+      {
+        "name": "🚀 Start All (Backend + Agent + Frontend)",
+        "configurations": [
+          "🟦 Backend (.NET :5680)",
+          "🐍 Agent Service (:8000)",
+          "⚛️ Frontend (Vite :5173)"
+        ],
+        "stopAll": true
+      }
+    ]
+  },
+
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "build-backend",
+        "command": "dotnet",
+        "type": "process",
+        "args": [
+          "build",
+          "${workspaceFolder}/backend/FairWorkly.sln",
+          "/property:GenerateFullPaths=true",
+          "/consoleloggerparameters:NoSummary"
+        ],
+        "problemMatcher": "$msCompile",
+        "group": "build"
+      }
+    ]
+  }
+}
