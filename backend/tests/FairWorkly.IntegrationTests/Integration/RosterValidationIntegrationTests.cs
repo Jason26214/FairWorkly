@@ -40,7 +40,6 @@ public class RosterValidationIntegrationTests : IAsyncLifetime
 
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true)
-            .AddUserSecrets<RosterValidationIntegrationTests>(optional: true)
             .Build();
 
         return configuration.GetConnectionString("DefaultConnection")

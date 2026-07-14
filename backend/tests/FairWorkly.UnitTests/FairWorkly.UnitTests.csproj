@@ -6,9 +6,6 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-
-    <!-- Share User Secrets with API project for integration tests -->
-    <UserSecretsId>19188c8f-cabf-4ba8-ac6d-6c7f6d1db700</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

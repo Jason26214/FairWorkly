@@ -165,7 +165,7 @@ try
     if (string.IsNullOrWhiteSpace(jwtSecret) || jwtSecret == "REPLACE_IN_ENVIRONMENT")
     {
         throw new InvalidOperationException(
-            "JwtSettings:Secret is missing. Set it via environment config (user-secrets/appsettings.Development.json)."
+            "JwtSettings:Secret is missing. Set it in appsettings.Development.json (copy from appsettings.Development.example.json)."
         );
     }
     var jwtIssuer = jwtSection["Issuer"] ?? builder.Configuration["JwtSettings:Issuer"];

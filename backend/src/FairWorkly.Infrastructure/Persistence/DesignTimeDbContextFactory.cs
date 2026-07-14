@@ -7,10 +7,9 @@ namespace FairWorkly.Infrastructure.Persistence;
 /// <summary>
 /// Factory for creating DbContext at design time (for EF Core migrations).
 /// Reads connection string from multiple sources in priority order:
-/// 1. User Secrets (highest priority)
-/// 2. appsettings.{ENV}.json (e.g., Development)
-/// 3. appsettings.json
-/// 4. Environment variable FAIRWORKLY_CONNECTION_STRING (fallback)
+/// 1. appsettings.{ENV}.json (e.g., Development, highest priority)
+/// 2. appsettings.json
+/// 3. Environment variable FAIRWORKLY_CONNECTION_STRING (fallback)
 /// </summary>
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<FairWorklyDbContext>
 {
@@ -23,7 +22,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<FairWorkly
         {
             throw new InvalidOperationException(
                 "Connection string not found. Provide it via:\n"
-                    + "  1. User Secrets (ConnectionStrings:DefaultConnection)\n"
+                    + "  1. appsettings.Development.json (ConnectionStrings:DefaultConnection)\n"
                     + "  2. appsettings.json (ConnectionStrings:DefaultConnection)\n"
                     + "  3. Environment variable FAIRWORKLY_CONNECTION_STRING"
             );
@@ -59,13 +58,6 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<FairWorkly
         {
             builder.AddJsonFile(envSettingsPath, optional: true, reloadOnChange: false);
         }
-
-        // User Secrets (highest priority, added last)
-        builder.AddUserSecrets(
-            typeof(DesignTimeDbContextFactory).Assembly,
-            optional: true,
-            reloadOnChange: false
-        );
 
         return builder.Build();
     }

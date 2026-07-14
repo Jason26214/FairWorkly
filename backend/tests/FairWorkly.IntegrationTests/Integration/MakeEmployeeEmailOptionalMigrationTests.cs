@@ -41,10 +41,9 @@ public class MakeEmployeeEmailOptionalMigrationTests : IAsyncLifetime
             return envConnectionString;
         }
 
-        // Priority 2: User secrets / appsettings.json
+        // Priority 2: appsettings.json
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true)
-            .AddUserSecrets<MakeEmployeeEmailOptionalMigrationTests>(optional: true)
             .Build();
 
         return configuration.GetConnectionString("DefaultConnection")
